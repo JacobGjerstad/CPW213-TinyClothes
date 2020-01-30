@@ -24,7 +24,7 @@ namespace TinyClothes.Data
             // LINQ Method Syntax
             List<Clothing> clothes = await context.Clothing
                                                   .OrderBy(c => c.ItemId)
-                                                  .Skip(pageNum * (pageSize - PageOffset)) // Skip must be before Take
+                                                  .Skip(pageSize * (pageNum - PageOffset)) // Skip must be before Take
                                                   .Take(pageSize)
                                                   .ToListAsync();
 
