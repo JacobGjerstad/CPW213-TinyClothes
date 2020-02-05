@@ -6,35 +6,53 @@
 <h1>Add new clothing</h1>
 
 <form method="post">
-    <label asp-for="Size"></label>
-    <input asp-for="Size" />
-    <span asp-validation-for="Size"></span>
-    <br />
+    <div class="form-group row">
+        <label asp-for="Size" class="col-sm-1 col-form-label"></label>
+        <div class="col-sm-3">
+            <input asp-for="Size" />
+        </div>
+        <span asp-validation-for="Size"></span>
+    </div>
 
-    <label asp-for="Type"></label>
-    <input asp-for="Type" />
-    <span asp-validation-for="Type"></span>
-    <br />
+    <div class="form-group row">
+        <label asp-for="Type" class="col-sm-1 col-form-label"></label>
+        <div class="col-sm-3">
+            <input asp-for="Type" />
+        </div>
+        <span asp-validation-for="Type"></span>
+    </div>
 
-    <label asp-for="Color"></label>
-    <input asp-for="Color" />
-    <span asp-validation-for="Color"></span>
-    <br />
+    <div class="form-group row">
+        <label asp-for="Color" class="col-sm-1 col-form-label"></label>
+        <div class="col-sm-3">
+            <input asp-for="Color" />
+        </div>
+        <span asp-validation-for="Color"></span>
+    </div>
 
-    <label asp-for="Price"></label>
-    <input asp-for="Price" />
-    <span asp-validation-for="Price"></span>
-    <br />
+    <div class="form-group row">
+        <label asp-for="Price" class="col-sm-1 col-form-label"></label>
+        <div class="col-sm-3">
+            <input asp-for="Price" />
+        </div>
+        <span asp-validation-for="Price"></span>
+    </div>
 
-    <label asp-for="Title"></label>
-    <input asp-for="Title" />
-    <span asp-validation-for="Title"></span>
-    <br />
+    <div class="form-group row">
+        <label asp-for="Title" class="col-sm-1 col-form-label"></label>
+        <div class="col-sm-3">
+            <input asp-for="Title" />
+        </div>
+        <span asp-validation-for="Title"></span>
+    </div>
 
-    <label asp-for="Description"></label>
-    <input asp-for="Description" />
-    <span asp-validation-for="Description"></span>
-    <br />
+    <div class="form-group row">
+        <label asp-for="Description" class="col-sm-1 col-form-label"></label>
+        <div class="col-sm-3">
+            <input asp-for="Description" />
+        </div>
+        <span asp-validation-for="Description"></span>
+    </div>
 
     <input type="submit" value="Add Clothing" />
 </form>
