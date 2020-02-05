@@ -23,6 +23,7 @@ namespace TinyClothes.Controllers
             const int PageSize = 2;
             // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator
             int pageNumber = page ?? 1;
+            ViewData["CurrentPage"] = pageNumber;
 
             int maxPage = await GetMaxPage(PageSize);
 
