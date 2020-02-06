@@ -1,3 +1,5 @@
+![.NET Core](https://github.com/JacobGjerstad/CPW213-TinyClothes/workflows/.NET%20Core/badge.svg)
+
 # CPW213-TinyClothes
 Tiny Clothes is an in-class eCommerce website built using ASP.NET Core MVC. This website is being created
 to get practice creating website in Microsoft Visual Studio. This website uses CRUD functionality and is 
