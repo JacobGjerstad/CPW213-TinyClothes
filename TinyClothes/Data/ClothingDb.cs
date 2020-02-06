@@ -51,14 +51,36 @@ namespace TinyClothes.Data
 
             return clothes;
         }
-        
+
+        public async static Task<Clothing> Edit(Clothing c, StoreContext context)
+        {
+            await context.AddAsync(c);
+            context.Entry(c).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return c;
+        }
+
+        /// <summary>
+        /// Returns single clothing item or null if there is no match
+        /// </summary>
+        /// <param name="id">Id of the clothing item</param>
+        /// <param name="context">DB Context</param>
+        public async static Task<Clothing> GetClothingById(int id, StoreContext context)
+        {
+            Clothing c = await (from clothing in context.Clothing
+                          where clothing.ItemId == id
+                          select clothing).SingleOrDefaultAsync();
+
+            return c;
+        }
+
         /// <summary>
         /// Adds a clothing boject to the database.
         /// Returns the object with the Id populated
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static async Task<Clothing> Add(Clothing c, StoreContext context)
+        public async static Task<Clothing> Add(Clothing c, StoreContext context)
         {
             await context.AddAsync(c); // prepares INSERT query
             await context.SaveChangesAsync(); // execute INSERT query
