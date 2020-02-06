@@ -52,6 +52,14 @@ namespace TinyClothes.Data
             return clothes;
         }
 
+        public async static Task<Clothing> Edit(Clothing c, StoreContext context)
+        {
+            await context.AddAsync(c);
+            context.Entry(c).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return c;
+        }
+
         /// <summary>
         /// Returns single clothing item or null if there is no match
         /// </summary>
