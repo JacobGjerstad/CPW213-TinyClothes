@@ -74,6 +74,19 @@ namespace TinyClothes.Data
             return c;
         }
 
+        public async static Task Delete(int id, StoreContext context)
+        {
+            Clothing c = await GetClothingById(id, context);
+
+            // If the product was found delete it
+            if(c != null)
+            {
+                await context.AddAsync(c);
+                context.Entry(c).State = EntityState.Deleted;
+                await context.SaveChangesAsync();
+            }
+        }
+
         /// <summary>
         /// Adds a clothing boject to the database.
         /// Returns the object with the Id populated
