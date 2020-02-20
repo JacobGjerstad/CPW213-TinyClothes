@@ -24,5 +24,20 @@ namespace TinyClothes
             await context.SaveChangesAsync();
             return acc;
         }
+
+        /// <summary>
+        /// Returns the account of the user with the supplied credentials.
+        /// Null is returned if there is no match
+        /// </summary>
+        public static async Task<Account> DoesUserMatch(LoginViewModel login, StoreContext context)
+        {
+            Account acc = await (from user in context.Accounts
+                                 where (user.Email == login.UsernameOrEmail ||
+                                        user.Username == login.UsernameOrEmail) &&
+                                        user.Password == login.Password
+                                 select user).SingleOrDefaultAsync();
+
+            return acc;
+        }
     }
 }
