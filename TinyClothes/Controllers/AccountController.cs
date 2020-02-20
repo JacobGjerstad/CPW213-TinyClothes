@@ -69,9 +69,16 @@ namespace TinyClothes.Controllers
             {
                 Account acc = await AccountDb.DoesUserMatch(login, _context);
 
-                SessionHelper.CreateUserSession(acc.AccountId, acc.Username, _http);
+                if(acc != null)
+                {
+                    SessionHelper.CreateUserSession(acc.AccountId, acc.Username, _http);
 
-                return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid credentials");
+                }
             }
 
             return View(login);
