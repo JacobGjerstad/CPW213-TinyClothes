@@ -22,11 +22,8 @@ namespace TinyClothes.Models
         /// </summary>
         public static bool IsUserLoggedIn(IHttpContextAccessor http)
         {
-            if (http.HttpContext.Session.GetInt32(IdKey).HasValue)
-            {
-                return true;
-            }
-            return false;
+            int? memberId = http.HttpContext.Session.GetInt32(IdKey);
+            return memberId.HasValue;
         }
 
         /// <summary>
