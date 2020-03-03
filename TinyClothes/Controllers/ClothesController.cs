@@ -118,7 +118,28 @@ namespace TinyClothes.Controllers
         [HttpGet]
         public async Task<IActionResult> Search(SearchCriteria search)
         {
-            return View();
+
+            // SELECT * 
+            // FROM Clothes
+            IQueryable<Clothing> allClothes = from c in _context.Clothing
+                                              select c;
+
+            // Where Price > MinPrice
+            if(search.MinPrice.HasValue)
+            {
+                allClothes = from c in allClothes
+                             where c.Price >= search.MinPrice
+                             select c;
+            }
+
+            // Where Price < MaxPrice
+            allClothes = from c in allClothes
+                            where c.Price <= search.MaxPrice
+                            select c;
+
+            search.Results = allClothes.ToList();
+
+            return View(search);
         }
     }
 }
