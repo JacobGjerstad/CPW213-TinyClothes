@@ -43,16 +43,23 @@
     </div>
 </div>
 
-<div>
-    @foreach (Clothing c in Model.Results)
-	{
+@if (Model.Results.Count > 0)
+{
+    <div>
         <ul>
-            <li>
-                @c.Title : @c.Price
-            </li>
+            @foreach (Clothing c in Model.Results)
+			{
+                    <li>
+                        @c.Title : @c.Price
+                    </li>
+			}
         </ul>
-	}
-</div>
+    </div>
+}
+else 
+{
+    <p>No results to display</p>
+}
 
 <div>
     <a asp-action="ShowAll">Back to List</a>
