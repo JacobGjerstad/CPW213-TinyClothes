@@ -94,5 +94,52 @@ namespace TinyClothes.Data
 
             return c;
         }
+        public static async Task<SearchCriteria> BuildSearchQuery(SearchCriteria search, StoreContext context)
+        {
+            // SELECT * 
+            // FROM Clothes
+            IQueryable<Clothing> allClothes = from c in context.Clothing
+                                              select c;
+
+            // Where Price > MinPrice
+            if (search.MinPrice.HasValue)
+            {
+                allClothes = from c in allClothes
+                             where c.Price >= search.MinPrice
+                             select c;
+            }
+
+            // Where Price < MaxPrice
+            if (search.MaxPrice.HasValue)
+            {
+                allClothes = from c in allClothes
+                             where c.Price <= search.MaxPrice
+                             select c;
+            }
+
+            if (!string.IsNullOrWhiteSpace(search.Size))
+            {
+                allClothes = from c in allClothes
+                             where c.Size == search.Size
+                             select c;
+            }
+
+            if (!string.IsNullOrWhiteSpace(search.Type))
+            {
+                allClothes = from c in allClothes
+                             where c.Type == search.Type
+                             select c;
+            }
+
+            if (!string.IsNullOrWhiteSpace(search.Title))
+            {
+                allClothes = from c in allClothes
+                             where c.Title.StartsWith(search.Title)
+                             select c;
+            }
+
+            search.Results = await allClothes.ToListAsync();
+            return search;
+        }
     }
 }

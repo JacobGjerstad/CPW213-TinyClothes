@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TinyClothes.Data;
 using TinyClothes.Models;
 
@@ -120,52 +121,19 @@ namespace TinyClothes.Controllers
         {
             if (ModelState.IsValid)
             {
-                // SELECT * 
-                // FROM Clothes
-                IQueryable<Clothing> allClothes = from c in _context.Clothing
-                                                  select c;
-
-                // Where Price > MinPrice
-                if(search.MinPrice.HasValue)
+                if(search.IsBeingSearched())
                 {
-                    allClothes = from c in allClothes
-                                 where c.Price >= search.MinPrice
-                                 select c;
+                    await ClothingDb.BuildSearchQuery(search, _context);
+                    return View(search);
                 }
-
-                // Where Price < MaxPrice
-                if (search.MaxPrice.HasValue)
+                else
                 {
-                    allClothes = from c in allClothes
-                                    where c.Price <= search.MaxPrice
-                                    select c;
+                    ModelState.AddModelError(string.Empty, "You must search by at least one criteria");
+                    return View(search);
                 }
-
-                if (!string.IsNullOrWhiteSpace(search.Size))
-                {
-                    allClothes = from c in allClothes
-                                 where c.Size == search.Size
-                                 select c;
-                }
-
-                if (!string.IsNullOrWhiteSpace(search.Type))
-                {
-                    allClothes = from c in allClothes
-                                 where c.Type == search.Type
-                                 select c;
-                }
-
-                if (!string.IsNullOrWhiteSpace(search.Title))
-                {
-                    allClothes = from c in allClothes
-                                 where c.Title.StartsWith(search.Title)
-                                 select c;
-                }
-
-                search.Results = allClothes.ToList();
             }
 
-            return View(search);
+            return View();
         }
     }
 }
