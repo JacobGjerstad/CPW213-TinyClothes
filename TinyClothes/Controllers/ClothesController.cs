@@ -133,12 +133,35 @@ namespace TinyClothes.Controllers
             }
 
             // Where Price < MaxPrice
-            allClothes = from c in allClothes
-                            where c.Price <= search.MaxPrice
-                            select c;
+            if (search.MaxPrice.HasValue)
+            {
+                allClothes = from c in allClothes
+                                where c.Price <= search.MaxPrice
+                                select c;
+            }
+
+            if (!string.IsNullOrWhiteSpace(search.Size))
+            {
+                allClothes = from c in allClothes
+                             where c.Size == search.Size
+                             select c;
+            }
+
+            if (!string.IsNullOrWhiteSpace(search.Type))
+            {
+                allClothes = from c in allClothes
+                             where c.Type == search.Type
+                             select c;
+            }
+
+            if (!string.IsNullOrWhiteSpace(search.Title))
+            {
+                allClothes = from c in allClothes
+                             where c.Title.StartsWith(search.Title)
+                             select c;
+            }
 
             search.Results = allClothes.ToList();
-
             return View(search);
         }
     }
