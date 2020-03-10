@@ -1,5 +1,5 @@
-﻿@model IEnumerable<TinyClothes.Models.Clothing>
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor  http
+﻿@model IEnumerable<Clothing>
+@inject IHttpContextAccessor  http
 @*
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor http
@@ -18,79 +18,14 @@
 }
 
 <p>
+    <a asp-action="Search" asp-controller="Clothes">Search Inventory</a>
+</p>
+
+<p>
     <a asp-action="Add" asp-controller="Clothes">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Size)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Color)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model)
-{
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
 
-            @{
-                // Get current url path "/Clothes/ShowAll"
-				string previousUrl = http.HttpContext.Request.Path;
-
-                // Add query string ("?page=2", "?page=3", etc)
-                previousUrl += http.HttpContext.Request.QueryString.Value;
-            }
-
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ItemId" class="btn btn-primary">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.ItemId" class="btn btn-danger">Delete</a>
-                <a asp-action="Add" asp-controller="Cart" class="btn btn-primary" 
-                                    asp-route-id="@item.ItemId" asp-route-prevUrl="@previousUrl">Add to Cart</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+@await Html.PartialAsync("_DisplayClothes", Model)
 
 <ul class="pagination">
 	@* Print Page Numbers *@
