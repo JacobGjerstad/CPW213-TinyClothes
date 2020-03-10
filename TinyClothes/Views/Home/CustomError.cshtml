@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1>Error page</h1>
+
+@if (ViewData["ErrorMsg"] != null)
+{
+    <h2>@ViewData["ErrorMsg"]</h2>
+}
+else
+{
+    <p>Something bad happened. Please try again later.</p>
+}
