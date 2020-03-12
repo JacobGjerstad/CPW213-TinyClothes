@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Clothing>
 @inject IHttpContextAccessor  http
 @*
-@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor http
+    @using Microsoft.AspNetCore.Http
+    @inject IHttpContextAccessor http
 *@
-    
+
 
 @{
     ViewData["Title"] = "List Clothing Inventory";
@@ -12,8 +12,8 @@
 
 <h1>Clothing Inventory</h1>
 
-@if (TempData["Message"] != null) 
-{ 
+@if (TempData["Message"] != null)
+{
     <div class="alert alert-success" role="alert">@TempData["Message"]</div>
 }
 
@@ -28,20 +28,40 @@
 @await Html.PartialAsync("_DisplayClothes", Model)
 
 <ul class="pagination">
-	@* Print Page Numbers *@
-	@for (int i = 1; i <= (int)ViewData["MaxPage"]; i++)
-	{
+    @* Print Page Numbers *@
+    @for (int i = 1; i <= (int)ViewData["MaxPage"]; i++)
+    {
         @if (i != (int)ViewData["CurrentPage"])
-		{
+        {
             <li class="page-item">
                 <a class="page-link" asp-action="ShowAll" asp-route-page="@i">@i</a>
             </li>
-		}
-		else
-		{
+        }
+        else
+        {
             <li class="page-item active">
                 <a class="page-link" href="#">@i</a>
             </li>
         }
-	}
+    }
 </ul>
+
+@section Scripts{
+    <script>
+		console.log("Add to cart script");
+		$("*[data-cart-button]").click(
+			function(event) {
+                // Stop <a> from navigating
+				event.preventDefault();
+
+				var currBtn = this;
+				console.log(currBtn);
+
+				var itemId = $(currBtn).attr("data-cart-itemid");
+
+				$.post("/Cart/AddJS", { id: itemId }).done(function() {
+					alert("Cart item added");
+				});
+			});
+    </script>
+}
